@@ -11,23 +11,31 @@ server.connection({
 const routeList = [
   {
     method: 'GET',
-    path: '/hello',
+    path: '/hello/{name?}',
     handler: (req, res) => {
-      return res('Hello World!');
+      if(req.params.name) return res(`Hi ${req.params.name}`);
+      return res(`Hey stranger`);
     }
   },
   {
     method: 'GET',
-    path: '/bye',
+    path: '/bye/{name?}',
     handler: (req, res) => {
-      return res('Goodbye World!');
+      if(req.params.name) return res(`Bye ${req.params.name}`);
+      return res(`Bye stranger`);
     }
   },
   {
-    method: 'POST',
-    path: '/hello2/{name}',
+    method: 'GET',
+    path: '/query',
     handler: (req, res) => {
-      return res(`Hey there ${req.params.name}`);
+      console.log(req.query);
+      if(req.query.id) return res(`query string is ${req.query.id}`);
+      return res(`No query string recreived`);
+    },
+    config: {
+      description: 'Query string test',
+      notes: 'If there\'s an id query it will print it out'
     }
   }
 ];
