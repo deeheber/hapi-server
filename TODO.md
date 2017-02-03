@@ -17,3 +17,8 @@ Things I want to add to this eventually.
   - [ ] query string
 4. Serve static files
 5. Testing
+6. Multiple resources
+  - [ ] user schema for login
+6. Authentication
+  - [ ] protected routes
+  - [ ] auth roles

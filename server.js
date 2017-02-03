@@ -1,7 +1,7 @@
 const Hapi = require('hapi');
 const routeList = require('./lib/routes/crud.js');
 
-//create server
+// create server
 const server = new Hapi.Server();
 
 server.connection({
@@ -9,6 +9,7 @@ server.connection({
   port: 8000
 });
 
+// add plugins
 server.register([
     {
       register: require('good'),
@@ -35,9 +36,10 @@ server.register([
   if (err) return console.error(err);
 });
 
+// add routes
 server.route(routeList);
 
-//start server
+// start server
 server.start(err => {
   if(err) throw err;
   console.log(`Server running at: ${server.info.uri}`);
