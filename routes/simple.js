@@ -1,10 +1,12 @@
-const crud = [
+/* These are simple routes I wrote to mess with params. Not actually included in the server */
+
+const simple = [
   {
     method: 'GET',
     path: '/hello/{name?}',
     handler: (req, res) => {
       if(req.params.name) return res(`Hi ${req.params.name}`);
-      return res(`Hey stranger`);
+      return res('Hey stranger');
     }
   },
   {
@@ -12,7 +14,7 @@ const crud = [
     path: '/bye/{name?}',
     handler: (req, res) => {
       if(req.params.name) return res(`Bye ${req.params.name}`);
-      return res(`Bye stranger`);
+      return res('Bye stranger');
     }
   },
   {
@@ -21,7 +23,7 @@ const crud = [
     handler: (req, res) => {
       console.log(req.query);
       if(req.query.id) return res(`query string is ${req.query.id}`);
-      return res(`No query string recreived`);
+      return res('No query string recreived');
     },
     config: {
       description: 'Query string test',
@@ -30,4 +32,4 @@ const crud = [
   }
 ];
 
-module.exports = crud;
+module.exports = simple;
