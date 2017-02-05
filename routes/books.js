@@ -9,7 +9,7 @@ const books = [
       return res('Hey stranger');
     }
   },
-    {
+  {
     method: 'POST',
     path: '/api/books',
     handler: (req, res) => {
