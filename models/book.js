@@ -13,7 +13,7 @@ const book = new Schema({
     type: Date, default: Date.now
   },
   complete: {
-    type: Boolean
+    type: Boolean, default: false
   }
 });
 

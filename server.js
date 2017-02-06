@@ -1,13 +1,15 @@
 const Hapi = require('hapi');
+const config = require('./config');
+const database = require('./database');
 const routeList = require('./routes/books.js');
-require('./db-connection');
+
 
 // create server
 const server = new Hapi.Server();
 
 server.connection({
-  host: 'localhost',
-  port: process.env.PORT || 3000
+  host: config.host,
+  port: config.port
 });
 
 // add plugins
@@ -35,13 +37,13 @@ server.register([
   }
 ], err => {
   if (err) return console.error(err);
-});
+  // add routes
+  server.route(routeList);
 
-// add routes
-server.route(routeList);
-
-// start server
-server.start(err => {
-  if(err) throw err;
-  console.log(`Server running at: ${server.info.uri}`);
+  // start server
+  server.start(err => {
+    if(err) throw err;
+    console.log(`Server running at: ${server.info.uri}`);
+    database.connect(config.db_uri);
+  });
 });
