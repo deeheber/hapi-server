@@ -3,14 +3,14 @@ TODO:
 Things I want to add to this eventually.
 
 1. connection to a database (probably MongoDB)
-  - [ ] Schema
-  - [ ] Connection config
+  - [x] Schema
+  - [x] Connection config
 2. ADD ROUTES
-  - [ ] GET /
-  - [ ] GET /:id
-  - [ ] POST /
-  - [ ] PUT /:id
-  - [ ] DELETE /:id
+  - [x] GET /
+  - [x] GET /:id
+  - [x] POST /
+  - [x] PUT /:id
+  - [x] DELETE /:id
 3. ADD OPTIONS for routes
   - [ ] params 
   - [ ] optional params
