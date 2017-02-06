@@ -1,6 +1,6 @@
 const Hapi = require('hapi');
-const config = require('./config');
-const database = require('./database');
+const config = require('./config/config');
+const database = require('./config/database');
 const routeList = require('./routes/books.js');
 
 
