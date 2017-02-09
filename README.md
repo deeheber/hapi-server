@@ -1,8 +1,8 @@
 # Hapi-Server
 
-Experimenting with how Hapi works, so writing some super simple server things here.
+Experimenting with how [Hapi](https://hapijs.com/) works, so writing some simple server functionality here.
 
-### Things I want to add to this eventually:
+Things I want to add to this eventually:
 
 1. Testing
 2. Multiple resources
