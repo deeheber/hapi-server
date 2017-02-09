@@ -12,9 +12,9 @@ Things I want to add to this eventually.
   - [x] PUT /:id
   - [x] DELETE /:id
 3. ADD OPTIONS for routes
-  - [ ] params 
-  - [ ] optional params
-  - [ ] query string
+  - [x] params 
+  - [x] optional params
+  - [x] query string
 4. Serve static files
 5. Testing
 6. Multiple resources

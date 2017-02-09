@@ -15,6 +15,10 @@ const simple = [
     handler: (req, res) => {
       if(req.params.name) return res(`Bye ${req.params.name}`);
       return res('Bye stranger');
+    },
+    config: {
+      description: 'Optional param',
+      notes: 'Name is optional'
     }
   },
   {

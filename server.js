@@ -1,11 +1,19 @@
+const Path = require('path');
 const Hapi = require('hapi');
 const config = require('./config/config');
 const database = require('./config/database');
 const routeList = require('./routes/books.js');
 
-
-// create server
-const server = new Hapi.Server();
+// create server and connect static file directory
+const server = new Hapi.Server({
+  connections: {
+    routes: {
+      files: {
+        relativeTo: Path.join(__dirname, 'public')
+      }
+    }
+  }
+});
 
 server.connection({
   host: config.host,
@@ -14,6 +22,7 @@ server.connection({
 
 // add plugins
 server.register([
+  require('inert'),
   {
     register: require('good'),
     options: {
