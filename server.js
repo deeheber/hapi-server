@@ -17,7 +17,10 @@ const server = new Hapi.Server({
 
 server.connection({
   host: config.host,
-  port: config.port
+  port: config.port,
+  router: {
+    stripTrailingSlash: true
+  }
 });
 
 // add plugins
