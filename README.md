@@ -1,9 +1,8 @@
 # Hapi-Server
 
-Experimenting with how [Hapi](https://hapijs.com/) works, so writing some simple server functionality here.
+Experimenting with how [Hapi](https://hapijs.com/) works, so writing some simple server functionality that makes calls to a [mongoDB database](https://www.mongodb.com/).
 
-Things I want to add to this eventually:
-
+Features coming sometime in the future:
 1. Testing
 2. Multiple resources
   - user schema for login ???
