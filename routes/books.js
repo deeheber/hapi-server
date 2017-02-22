@@ -1,6 +1,6 @@
 const Book = require('../models/book');
 const Boom = require('boom');
-//const Joi = require('joi');
+const Joi = require('joi');
 
 const books = [
   {
@@ -16,7 +16,6 @@ const books = [
     handler: {
       directory: {
         path: '.',
-        //redirectToSlash: true,
         index: true
       }
     },
@@ -39,34 +38,55 @@ const books = [
   {
     method: 'GET',
     path: '/api/books/{id}',
-    // add validation stuff here to make sure book exists in db
-    // validate the id param
     handler: (req, res) => {
       Book.findById(req.params.id)
         .then(book => res(book))
         .catch(err => res(Boom.badRequest(err)));
     },
     config: {
+      validate: {
+        query: Joi.object().keys({
+          id: Joi
+            .string()
+        })
+      },
       description: 'Get a single book by ._id'
     }
   },
   {
     method: 'POST',
     path: '/api/books',
-    // add validation stuff here for req.payload
     handler: (req, res) => {
       new Book(req.payload).save()
         .then(saved => res(saved))
         .catch(err => res(Boom.badRequest(err)));
     },
     config: {
+      validate: {
+        payload: Joi.object().keys({
+          title: Joi
+            .string()
+            .required(),
+          author: Joi
+            .string()
+            .optional(),
+          purchaseDate: Joi
+            .date()
+            .optional(),
+          complete: Joi
+            .boolean()
+            .truthy('true')
+            .falsy('false')
+            .default('false')
+            .optional()
+        })
+      },
       description: 'Add a new book'
     }
   },
   {
     method: 'PUT',
     path: '/api/books/{id}',
-    // add validation stuff for req.payload and the id
     handler: (req, res) => {
       Book.findByIdAndUpdate(req.params.id, req.payload, { 
         new: true, 
@@ -76,13 +96,35 @@ const books = [
         .catch(err => res(Boom.badRequest(err)));
     },
     config: {
+      validate: {
+        query: Joi.object().keys({
+          id: Joi
+            .string()
+        }),
+        payload: Joi.object().keys({
+          title: Joi
+            .string()
+            .optional(),
+          author: Joi
+            .string()
+            .optional(),
+          purchaseDate: Joi
+            .date()
+            .optional(),
+          complete: Joi
+            .boolean()
+            .truthy('true')
+            .falsy('false')
+            .default('false')
+            .optional()
+        })
+      },
       description: 'Update info in a book'
     }
   },
   {
     method: 'DELETE',
     path: '/api/books/{id}',
-    // add validation stuff -> make sure book id is valid & exists
     handler: (req, res) => {
       console.log(req.params);
       Book.findByIdAndRemove(req.params.id)
@@ -90,6 +132,12 @@ const books = [
         .catch(err => res(Boom.badRequest(err)));
     },
     config: {
+      validate: {
+        query: Joi.object().keys({
+          id: Joi
+            .string()
+        })
+      },
       description: 'Delete a book'
     }
   }
