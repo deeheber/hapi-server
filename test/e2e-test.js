@@ -4,12 +4,9 @@ const lab = exports.lab = Lab.script();
 
 const server = require('../server');
 
-lab.test('returns true when 1 + 1 equals 2', (done) => {
-  Code.expect(1 + 1).to.equal(2);
-  done();
-});
-
 lab.experiment('HTTP tests', () => {
+  // add code to clear the database here
+
   lab.test('Healthcheck', done => {
     const options = {
       method: 'GET',
@@ -23,4 +20,32 @@ lab.experiment('HTTP tests', () => {
     });
     
   });
+
+  // lab.test('Creates a new book', done => {
+
+  // });
+
+  // lab.test('Creates a second book', done => {
+
+  // });
+
+  // lab.test('Gets book 1', done => {
+
+  // });
+
+  // lab.test('Gets all books', done => {
+
+  // });
+
+  // lab.test('Updates book 1', done => {
+
+  // });
+
+  // lab.test('Deletes book 2', done => {
+
+  //  });
+
+  // add code to clear the database and close the database connection here
+
 });
+
