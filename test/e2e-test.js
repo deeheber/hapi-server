@@ -18,8 +18,9 @@ lab.experiment('HTTP tests', () => {
 
     server.inject(options, response => {
       Code.expect(response.statusCode).to.equal(200);
+      Code.expect(response.result).to.equal('Server is working. Yay!');
       done();
     });
     
-  })
-})
+  });
+});
