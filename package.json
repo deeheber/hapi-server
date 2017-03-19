@@ -29,5 +29,8 @@
     "eslint-plugin-hapi": "^4.0.0",
     "lab": "^12.1.0",
     "nodemon": "^1.11.0"
+  },
+  "engines": {
+    "node": "6.3.0"
   }
 }
