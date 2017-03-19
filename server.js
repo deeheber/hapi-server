@@ -1,5 +1,10 @@
 const Path = require('path');
 const Hapi = require('hapi');
+const Inert = require('inert');
+const Vision = require('vision');
+const Good = require('good');
+const HapiSwagger = require('hapi-swagger');
+const version = require('./package').version;
 const config = require('./config/config');
 const database = require('./config/database');
 const routeList = require('./routes/books.js');
@@ -20,14 +25,24 @@ server.connection({
   port: config.port,
   router: {
     stripTrailingSlash: true
-  }
+  },
+  labels: ['api']
 });
 
 // add plugins
 server.register([
-  require('inert'),
-  {
-    register: require('good'),
+  Inert,
+  Vision,
+  { register: HapiSwagger,
+    options: {
+      info: {
+        'title': 'Book API',
+        version
+      },
+      basePath: '/api'
+    }
+  },
+  { register: Good,
     options: {
       ops: {
         interval: 1000

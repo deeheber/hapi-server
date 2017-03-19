@@ -32,7 +32,8 @@ const books = [
         .catch(err => res(Boom.badRequest(err)));
     },
     config: {
-      description: 'Get all books'
+      description: 'Get all books',
+      tags: ['api']
     }
   },
   {
@@ -45,12 +46,13 @@ const books = [
     },
     config: {
       validate: {
-        query: Joi.object().keys({
+        params: Joi.object().keys({
           id: Joi
             .string()
         })
       },
-      description: 'Get a single book by ._id'
+      description: 'Get a single book by ._id',
+      tags: ['api']
     }
   },
   {
@@ -81,7 +83,8 @@ const books = [
             .optional()
         })
       },
-      description: 'Add a new book'
+      description: 'Add a new book',
+      tags: ['api']
     }
   },
   {
@@ -97,7 +100,7 @@ const books = [
     },
     config: {
       validate: {
-        query: Joi.object().keys({
+        params: Joi.object().keys({
           id: Joi
             .string()
         }),
@@ -119,7 +122,8 @@ const books = [
             .optional()
         })
       },
-      description: 'Update info in a book'
+      description: 'Update info in a book',
+      tags: ['api']
     }
   },
   {
@@ -133,12 +137,13 @@ const books = [
     },
     config: {
       validate: {
-        query: Joi.object().keys({
+        params: Joi.object().keys({
           id: Joi
             .string()
         })
       },
-      description: 'Delete a book'
+      description: 'Delete a book',
+      tags: ['api']
     }
   }
 ];
