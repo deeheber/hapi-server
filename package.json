@@ -4,7 +4,7 @@
   "description": "testing out building a server in hapi",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "test": "lab"
   },
   "author": "Danielle Heberling",
