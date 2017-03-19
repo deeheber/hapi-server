@@ -1,5 +1,7 @@
 # Hapi-Server
 
+Live deployment [here](https://hapi-server-ocwtxeubpt.now.sh/) 
+
 Experimenting with how [Hapi](https://hapijs.com/) works, so writing some simple server functionality that makes calls to [mongoDB](https://www.mongodb.com/).
 
 Check out [issues](https://github.com/deeheber/hapi-server/issues) to see any planned features or open bugs.
