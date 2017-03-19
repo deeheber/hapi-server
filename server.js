@@ -74,3 +74,5 @@ server.register([
     database.connect(config.db_uri);
   });
 });
+
+module.exports = server;
