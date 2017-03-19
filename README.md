@@ -10,4 +10,4 @@ Check out [issues](https://github.com/deeheber/hapi-server/issues) to see any pl
 3. In a terminal window type `npm install`
 4. `npm start` will start the server 
 5. Start your local mongoDB
-5. Navigate to `http://localhost:3000/` in a web browser or use an application like [Postman](https://www.getpostman.com/) to make calls to the server.
+5. Navigate to `http://localhost:3000/documentation` in a web browser or use an application like [Postman](https://www.getpostman.com/) to make calls to the server.

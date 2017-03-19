@@ -1,6 +1,6 @@
 {
   "name": "hapi-server",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "testing out building a server in hapi",
   "main": "server.js",
   "scripts": {
