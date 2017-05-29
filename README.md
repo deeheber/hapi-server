@@ -1,6 +1,6 @@
 # Hapi-Server
 
-Live deployment [here](https://hapi-server-ocwtxeubpt.now.sh/) 
+Live deployment [here](https://hapi-danielle.herokuapp.com/) 
 
 Experimenting with how [Hapi](https://hapijs.com/) works, so writing some simple server functionality that makes calls to [mongoDB](https://www.mongodb.com/).
 
