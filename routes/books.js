@@ -28,7 +28,7 @@ const books = [
   {
     method: 'GET',
     path: '/api/books',
-    handler: catchErrors(async (req, res) => {
+    handler: catchErrors(async () => {
       const books = await Book.find();
       return books;
     }),
@@ -40,7 +40,7 @@ const books = [
   {
     method: 'GET',
     path: '/api/books/{id}',
-    handler: catchErrors(async (req, res) => {
+    handler: catchErrors(async (req) => {
       const book = await Book.findById(req.params.id);
       if (!book) {
         throw Boom.notFound();
@@ -61,7 +61,7 @@ const books = [
   {
     method: 'POST',
     path: '/api/books',
-    handler: catchErrors(async (req, res) => {
+    handler: catchErrors(async (req) => {
       const newBook = await new Book(req.payload).save();
       return newBook;
     }),
@@ -92,7 +92,7 @@ const books = [
   {
     method: 'PUT',
     path: '/api/books/{id}',
-    handler: catchErrors(async (req, res) => {
+    handler: catchErrors(async (req) => {
       const updated = await Book
         .findByIdAndUpdate(req.params.id, req.payload, { 
           new: true, 
@@ -134,7 +134,7 @@ const books = [
   {
     method: 'DELETE',
     path: '/api/books/{id}',
-    handler: catchErrors(async (req, res) => {
+    handler: catchErrors(async (req) => {
       const deleted = await Book.findByIdAndRemove(req.params.id);
       if (!deleted) {
         throw Boom.notFound();

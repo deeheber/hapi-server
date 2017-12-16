@@ -15,6 +15,7 @@
     "node": true,
     "browser": true
   },
+  "parser": "babel-eslint",
   "rules": {
     "no-unused-vars": 1,
     "semi": 1,

@@ -5,3 +5,4 @@ module.exports = handler => (req, res) =>
       req.log(['error'], err.message);
       res(err);
     });
+    
