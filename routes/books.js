@@ -2,6 +2,8 @@ const Book = require('../models/book');
 const Boom = require('boom');
 const Joi = require('joi');
 
+const catchErrors = require('../util/catchErrors');
+
 const books = [
   {
     method: 'GET',
@@ -26,11 +28,10 @@ const books = [
   {
     method: 'GET',
     path: '/api/books',
-    handler: (req, res) => {
-      Book.find()
-        .then(books => res(books))
-        .catch(err => res(Boom.badRequest(err)));
-    },
+    handler: catchErrors(async (req, res) => {
+      const books = await Book.find();
+      return books;
+    }),
     config: {
       description: 'Get all books',
       tags: ['api']
@@ -39,11 +40,13 @@ const books = [
   {
     method: 'GET',
     path: '/api/books/{id}',
-    handler: (req, res) => {
-      Book.findById(req.params.id)
-        .then(book => res(book))
-        .catch(err => res(Boom.badRequest(err)));
-    },
+    handler: catchErrors(async (req, res) => {
+      const book = await Book.findById(req.params.id);
+      if (!book) {
+        throw Boom.notFound();
+      }
+      return book;
+    }),
     config: {
       validate: {
         params: Joi.object().keys({
@@ -58,11 +61,10 @@ const books = [
   {
     method: 'POST',
     path: '/api/books',
-    handler: (req, res) => {
-      new Book(req.payload).save()
-        .then(saved => res(saved))
-        .catch(err => res(Boom.badRequest(err)));
-    },
+    handler: catchErrors(async (req, res) => {
+      const newBook = await new Book(req.payload).save();
+      return newBook;
+    }),
     config: {
       validate: {
         payload: Joi.object().keys({
@@ -90,14 +92,17 @@ const books = [
   {
     method: 'PUT',
     path: '/api/books/{id}',
-    handler: (req, res) => {
-      Book.findByIdAndUpdate(req.params.id, req.payload, { 
-        new: true, 
-        runValidators: true
-      })
-        .then(updated => res(updated))
-        .catch(err => res(Boom.badRequest(err)));
-    },
+    handler: catchErrors(async (req, res) => {
+      const updated = await Book
+        .findByIdAndUpdate(req.params.id, req.payload, { 
+          new: true, 
+          runValidators: true
+        });
+      if (!updated) {
+        throw Boom.notFound();
+      }
+      return updated;
+    }),
     config: {
       validate: {
         params: Joi.object().keys({
@@ -129,12 +134,13 @@ const books = [
   {
     method: 'DELETE',
     path: '/api/books/{id}',
-    handler: (req, res) => {
-      console.log(req.params);
-      Book.findByIdAndRemove(req.params.id)
-        .then(deleted => res(deleted))
-        .catch(err => res(Boom.badRequest(err)));
-    },
+    handler: catchErrors(async (req, res) => {
+      const deleted = await Book.findByIdAndRemove(req.params.id);
+      if (!deleted) {
+        throw Boom.notFound();
+      }
+      return deleted;
+    }),
     config: {
       validate: {
         params: Joi.object().keys({
