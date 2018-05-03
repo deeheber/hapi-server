@@ -4,8 +4,7 @@
   "description": "testing out building a server in hapi",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "lab"
+    "start": "node server.js"
   },
   "author": "Danielle Heberling",
   "license": "ISC",
@@ -13,6 +12,7 @@
     "boom": "^7.2.0",
     "good": "^8.1.1",
     "good-console": "^7.1.0",
+    "good-squeeze": "^5.1.0",
     "hapi": "^17.4.0",
     "hapi-swagger": "^9.1.1",
     "inert": "^5.1.0",

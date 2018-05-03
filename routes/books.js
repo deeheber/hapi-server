@@ -7,26 +7,6 @@ const catchErrors = require('../util/catchErrors');
 const books = [
   {
     method: 'GET',
-    path: '/health',
-    handler: (req, res) => {
-      return res('Server is working. Yay!');
-    }
-  },
-  {
-    method: 'GET',
-    path: '/{param*}',
-    handler: {
-      directory: {
-        path: '.',
-        index: true
-      }
-    },
-    config: {
-      description: 'Serves static files in /public folder'
-    }
-  },
-  {
-    method: 'GET',
     path: '/api/books',
     handler: catchErrors(async () => {
       const books = await Book.find();
