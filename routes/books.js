@@ -7,31 +7,11 @@ const catchErrors = require('../util/catchErrors');
 const books = [
   {
     method: 'GET',
-    path: '/health',
-    handler: (req, res) => {
-      return res('Server is working. Yay!');
-    }
-  },
-  {
-    method: 'GET',
-    path: '/{param*}',
-    handler: {
-      directory: {
-        path: '.',
-        index: true
-      }
-    },
-    config: {
-      description: 'Serves static files in /public folder'
-    }
-  },
-  {
-    method: 'GET',
     path: '/api/books',
-    handler: catchErrors(async () => {
+    handler: async () => {
       const books = await Book.find();
       return books;
-    }),
+    },
     config: {
       description: 'Get all books',
       tags: ['api']
@@ -40,14 +20,14 @@ const books = [
   {
     method: 'GET',
     path: '/api/books/{id}',
-    handler: catchErrors(async (req) => {
+    handler: async (req) => {
       const book = await Book.findById(req.params.id);
       if (!book) {
         throw Boom.notFound();
       }
       return book;
-    }),
-    config: {
+    },
+    options: {
       validate: {
         params: Joi.object().keys({
           id: Joi
@@ -61,11 +41,11 @@ const books = [
   {
     method: 'POST',
     path: '/api/books',
-    handler: catchErrors(async (req) => {
+    handler: async (req) => {
       const newBook = await new Book(req.payload).save();
       return newBook;
-    }),
-    config: {
+    },
+    options: {
       validate: {
         payload: Joi.object().keys({
           title: Joi
@@ -92,7 +72,7 @@ const books = [
   {
     method: 'PUT',
     path: '/api/books/{id}',
-    handler: catchErrors(async (req) => {
+    handler: async (req) => {
       const updated = await Book
         .findByIdAndUpdate(req.params.id, req.payload, { 
           new: true, 
@@ -102,8 +82,8 @@ const books = [
         throw Boom.notFound();
       }
       return updated;
-    }),
-    config: {
+    },
+    options: {
       validate: {
         params: Joi.object().keys({
           id: Joi
@@ -134,14 +114,14 @@ const books = [
   {
     method: 'DELETE',
     path: '/api/books/{id}',
-    handler: catchErrors(async (req) => {
+    handler: async (req) => {
       const deleted = await Book.findByIdAndRemove(req.params.id);
       if (!deleted) {
         throw Boom.notFound();
       }
       return deleted;
-    }),
-    config: {
+    },
+    options: {
       validate: {
         params: Joi.object().keys({
           id: Joi

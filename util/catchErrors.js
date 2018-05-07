@@ -1,8 +1,7 @@
-module.exports = handler => (req, res) =>
-  handler(req, res)
-    .then(res)
-    .catch(err => {
-      req.log(['error'], err.message);
-      res(err);
-    });
-    
+const catchErrors = (request, h, err) => {
+    console.log('in handle error');
+    console.error(err);
+    throw err;
+};
+
+module.exports = catchErrors;

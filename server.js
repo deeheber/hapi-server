@@ -1,4 +1,3 @@
-const Path = require('path');
 const Hapi = require('hapi');
 const Inert = require('inert');
 const Vision = require('vision');
@@ -7,71 +6,75 @@ const HapiSwagger = require('hapi-swagger');
 const version = require('./package').version;
 const config = require('./config/config');
 const database = require('./config/database');
-const routeList = require('./routes/books.js');
+const basicRoutes = require('./routes/basic');
+const bookRoutes = require('./routes/books.js');
 
-// create server and connect static file directory
-const server = new Hapi.Server({
-  connections: {
-    routes: {
-      files: {
-        relativeTo: Path.join(__dirname, 'public')
+const catchErrors = require('./util/catchErrors');
+
+// Start the server
+const init = async ()=> {
+  try {
+    // create server with a host and port
+    const server = Hapi.server({
+      host: 'localhost',
+      port: config.port,
+      routes: {
+        validate: {
+          failAction: catchErrors
+        }
       }
-    }
-  }
-});
-
-server.connection({
-  port: config.port,
-  router: {
-    stripTrailingSlash: true
-  },
-  labels: ['api']
-});
-
-// add plugins
-server.register([
-  Inert,
-  Vision,
-  { register: HapiSwagger,
-    options: {
-      info: {
-        'title': 'Book API',
-        version
-      },
-      basePath: '/api'
-    }
-  },
-  { register: Good,
-    options: {
-      ops: {
-        interval: 1000
-      },
-      reporters: {
-        console: [
-          {
-            module: 'good-squeeze',
-            name: 'Squeeze',
-            args: [{ log: '*', response: '*', request: '*' }]
+    });
+    
+    // Add plugins
+    await server.register([
+      Inert,
+      Vision,
+      { plugin: HapiSwagger,
+        options: {
+          info: {
+            'title': 'Book API',
+            version
           },
-          {
-            module: 'good-console'
-          }, 
-          'stdout'
-        ]
+          basePath: '/api'
+        }
+      },
+      { plugin: Good,
+        options: {
+          ops: {
+            interval: 1000
+          },
+          reporters: {
+            console: [
+              {
+                module: 'good-squeeze',
+                name: 'Squeeze',
+                args: [{ log: '*', response: '*', request: '*' }]
+              },
+              {
+                module: 'good-console'
+              }, 
+              'stdout'
+            ]
+          }
+        }
       }
-    }
-  }
-], err => {
-  if (err) return console.error(err);
-  // add routes
-  server.route(routeList);
+    ]);
 
-  // start server
-  server.start(err => {
-    if(err) throw err;
-    console.log(`Server running at: ${server.info.uri}`);
+    // Add routes
+    server.route(basicRoutes.concat(bookRoutes));
+
+    // Start server
+    await server.start();
+
+    // Connect to database
     database.connect(config.db_uri);
-  });
-});
 
-module.exports = server;
+    console.log(`Server running at: ${server.info.uri}`);
+  }
+  catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
+}
+
+init();
