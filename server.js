@@ -9,15 +9,22 @@ const database = require('./config/database');
 const basicRoutes = require('./routes/basic');
 const bookRoutes = require('./routes/books.js');
 
-// create server with a host and port
-const server = Hapi.server({
-  host: 'localhost',
-  port: config.port
-});
+const catchErrors = require('./util/catchErrors');
 
 // Start the server
 const init = async ()=> {
   try {
+    // create server with a host and port
+    const server = Hapi.server({
+      host: 'localhost',
+      port: config.port,
+      routes: {
+        validate: {
+          failAction: catchErrors
+        }
+      }
+    });
+    
     // Add plugins
     await server.register([
       Inert,
@@ -65,11 +72,9 @@ const init = async ()=> {
     console.log(`Server running at: ${server.info.uri}`);
   }
   catch (err) {
-    console.log(err);
+    console.error(err);
     process.exit(1);
   }
 }
 
 init();
-
-module.exports = server;
