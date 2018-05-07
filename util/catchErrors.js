@@ -4,4 +4,4 @@ const catchErrors = (request, h, err) => {
     throw err;
 };
 
-module.exports = catchError;
+module.exports = catchErrors;
